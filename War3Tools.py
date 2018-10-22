@@ -76,6 +76,41 @@ def data_handle(sheetinfo):
         title_array.append(sheetinfo.row_values(0)[i])
     print(title_array)
 
+    temp_1, temp_2, temp_3, temp_4, temp_5, temp_6 = "", "", "", "", "", ""
+    temp = ""
+    for i in range(1, len(sheetinfo.col_values(0))):
+        # print('第{0}次'.format(i))
+        for j in range(1, len(title_array)+1):
+            # print(sheetinfo.cell_value(i, j))
+            if sheetinfo.cell_value(i, j) == '':
+                pass
+            else:
+                num = j-1
+                # print(num)
+                if j == 1:
+                    temp_1 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
+                    print(temp_1)
+                elif j == 2:
+                    temp_2 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
+                    # print(temp2)
+                elif j == 3:
+                    temp_3 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
+                    # print(temp3)
+                elif j == 4:
+                    temp_4 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
+                    # print(temp4)
+                elif j == 5:
+                    temp_5 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
+                    # print(temp5)
+                elif j == 6:
+                    temp_6 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
+                    # print(temp6)
+                else:
+                    pass
+            temp = temp + temp_1 + temp_2 + temp_3 + temp_4 + temp_5 + temp_6 + '\n'
+
+        print(temp)
+        # print(i, j)
 def data_write():
     pass
 
