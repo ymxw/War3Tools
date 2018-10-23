@@ -29,12 +29,14 @@ def function_read(sheetDaoju):
     print(lists2)
 
     return lists2, lists
-def function_lua(sheetDaoju):
+def function_lua(sheetDaoju, isshow):
+
     _sheetName = sheetName.get(index1=1.0, index2=tk.END)[:-1]
     __Lua_Title, __Lua_Item = function_read(sheetDaoju)
     print(__Lua_Item[0])
     LuaCode = luaCodeStart + luaCodeFunction
     LuaCode1 = luaCodeStart + luaCodeFunction1
+    iteminfo = data_handle(sheetDaoju, isshow)
     if '道具' in _sheetName:
         tempItem = LuaCode
     else:
@@ -70,46 +72,82 @@ def function_lua(sheetDaoju):
     f.close()
 
 # 生成预览
-def data_handle(sheetinfo):
+def data_handle(sheetinfo, isshow):
     title_array = []
     for i in range(1, len(sheetinfo.row_values(0))):
         title_array.append(sheetinfo.row_values(0)[i])
     print(title_array)
 
     temp_1, temp_2, temp_3, temp_4, temp_5, temp_6 = "", "", "", "", "", ""
+    temp_array = ["", "", "", "", "", ""]
     temp = ""
-    for i in range(1, len(sheetinfo.col_values(0))):
-        # print('第{0}次'.format(i))
-        for j in range(1, len(title_array)+1):
-            # print(sheetinfo.cell_value(i, j))
-            if sheetinfo.cell_value(i, j) == '':
-                pass
-            else:
-                num = j-1
-                # print(num)
-                if j == 1:
-                    temp_1 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
-                    print(temp_1)
-                elif j == 2:
-                    temp_2 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
-                    # print(temp2)
-                elif j == 3:
-                    temp_3 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
-                    # print(temp3)
-                elif j == 4:
-                    temp_4 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
-                    # print(temp4)
-                elif j == 5:
-                    temp_5 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
-                    # print(temp5)
-                elif j == 6:
-                    temp_6 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
-                    # print(temp6)
-                else:
-                    pass
-            temp = temp + temp_1 + temp_2 + temp_3 + temp_4 + temp_5 + temp_6 + '\n'
 
-        print(temp)
+    if isshow:
+        for i in range(1, len(sheetinfo.col_values(0))):
+            # print('第{0}次'.format(i))
+            for j in range(1, len(title_array)+1):
+                # print(sheetinfo.cell_value(i, j))
+                if sheetinfo.cell_value(i, j) == '':
+                    pass
+                else:
+                    num = j-1
+                    # print(num)
+                    if j == 1:
+                        temp_1 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
+                        # print(temp_1)
+                    elif j == 2:
+                        temp_2 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
+                        # print(temp2)
+                    elif j == 3:
+                        temp_3 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
+                        # print(temp3)
+                    elif j == 4:
+                        temp_4 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
+                        # print(temp4)
+                    elif j == 5:
+                        temp_5 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
+                        # print(temp5)
+                    elif j == 6:
+                        temp_6 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
+                        # print(temp6)
+                    else:
+                        pass
+            temp = temp + temp_1 + temp_2 + temp_3 + temp_4 + temp_5 + temp_6 + '\n'
+            print(temp)
+
+    else:
+        for i in range(1, len(sheetinfo.col_values(0))):
+            # print('第{0}次'.format(i))
+            for j in range(1, len(title_array)+1):
+                # print(sheetinfo.cell_value(i, j))
+                if sheetinfo.cell_value(i, j) == '':
+                    pass
+                else:
+                    num = j-1
+                    # print(num)
+                    if j == 1:
+                        temp_1 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
+                        # print(temp_1)
+                    elif j == 2:
+                        temp_2 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
+                        # print(temp2)
+                    elif j == 3:
+                        temp_3 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
+                        # print(temp3)
+                    elif j == 4:
+                        temp_4 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
+                        # print(temp4)
+                    elif j == 5:
+                        temp_5 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
+                        # print(temp5)
+                    elif j == 6:
+                        temp_6 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
+                        # print(temp6)
+                    else:
+                        pass
+            temp = temp + temp_1 + temp_2 + temp_3 + temp_4 + temp_5 + temp_6 + '\n'
+            print(temp)
+            return temp
         # print(i, j)
 def data_write():
     pass
@@ -154,9 +192,12 @@ def T1():
     # path + '/' +file 是文件的完整路径
     path = FilePath.get(index1=1.0, index2=tk.END)[:-1]
     name = sheetName.get(index1=1.0, index2=tk.END)[:-1]
+    isshow = False
     data = xlrd.open_workbook(path)
     _sheetDaoju = data.sheet_by_name(name)
-    function_lua(_sheetDaoju)
+
+    function_lua(_sheetDaoju, isshow)
+
 def T2():
     PathTip.place(x=5, y=5)
     FilePath.place(x=80, y=5)
@@ -199,7 +240,8 @@ def T5():
     name = sheetName.get(index1=1.0, index2=tk.END)[:-1]
     data = xlrd.open_workbook(path)
     _sheetinfo = data.sheet_by_name(name)
-    data_handle(_sheetinfo)
+    isshow = True
+    data_handle(_sheetinfo, isshow)
 
 if __name__ == '__main__':
 
