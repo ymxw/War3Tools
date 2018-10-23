@@ -29,14 +29,16 @@ def function_read(sheetDaoju):
     print(lists2)
 
     return lists2, lists
-def function_lua(sheetDaoju, isshow):
+def function_lua(sheetDaoju, sheetinfo, isshow):
 
     _sheetName = sheetName.get(index1=1.0, index2=tk.END)[:-1]
     __Lua_Title, __Lua_Item = function_read(sheetDaoju)
     print(__Lua_Item[0])
     LuaCode = luaCodeStart + luaCodeFunction
     LuaCode1 = luaCodeStart + luaCodeFunction1
-    iteminfo = data_handle(sheetDaoju, isshow)
+    iteminfo = data_handle(sheetinfo, isshow)
+    iteminfo_array = iteminfo.split(',')
+    # print(iteminfo_array)
     if '道具' in _sheetName:
         tempItem = LuaCode
     else:
@@ -51,7 +53,14 @@ def function_lua(sheetDaoju, isshow):
                     if __Lua_Item[j][i] == "":
                         pass
                     else:
-                        tempItem = tempItem + luaCodeItem.format(__Lua_Title[j], __Lua_Item[j][i])
+                        if __Lua_Title[j] == 'Description':
+                            tempItem = tempItem + luaCodeItem2.format(__Lua_Title[j], '"', iteminfo_array[i], '"')
+                        elif __Lua_Title[j] == 'Tip':
+                            tempItem = tempItem + luaCodeItem2.format(__Lua_Title[j], '"', iteminfo_array[i], '"')
+                        elif __Lua_Title[j] == 'Ubertip':
+                            tempItem = tempItem + luaCodeItem2.format(__Lua_Title[j], '"', iteminfo_array[i], '"')
+                        else:
+                            tempItem = tempItem + luaCodeItem.format(__Lua_Title[j], __Lua_Item[j][i])
 
             else:
                 if j == 0:
@@ -105,15 +114,35 @@ def data_handle(sheetinfo, isshow):
                         temp_4 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
                         # print(temp4)
                     elif j == 5:
-                        temp_5 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
-                        # print(temp5)
+                        tx_str = sheetinfo.cell_value(i, j)
+                        tx_array1 = tx_str.split('|')
+                        tx = ''
+                        print(tx_array1)
+                        if len(tx_array1)>1:
+                            for c in range(len(tx_array1)):
+                                for a in range(1, len(tx_sheet.col_values(0))):
+                                    for b in range(1, len(tx_sheet.row_values(0))):
+                                        if tx_array1[c][1:len(sheetinfo.cell_value(i, j))] == tx_sheet.cell_value(a, b):
+                                            tx = tx + tx_array1[c] + tx_sheet.cell_value(a, b + 1) + '\n'
+                                            print(tx)
+                                        else:
+                                            pass
+                            temp_5 = title_array[num] + ":\n" + tx
+                            pass
+                        for a in range(1, len(tx_sheet.col_values(0))):
+                            for b in range(1, len(tx_sheet.row_values(0))):
+                                if sheetinfo.cell_value(i, j)[1:len(sheetinfo.cell_value(i, j))] == tx_sheet.cell_value(a, b):
+                                    print(tx_sheet.cell_value(a, b))
+                                    temp_5 = title_array[num] + ":\n" + sheetinfo.cell_value(i, j) + ":" + tx_sheet.cell_value(a, b+1) + '\n'
+                                    print(temp_5)
+                                else:
+                                    pass
                     elif j == 6:
                         temp_6 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
-                        # print(temp6)
                     else:
                         pass
             temp = temp + temp_1 + temp_2 + temp_3 + temp_4 + temp_5 + temp_6 + '\n'
-            print(temp)
+        print(temp)
 
     else:
         for i in range(1, len(sheetinfo.col_values(0))):
@@ -126,8 +155,10 @@ def data_handle(sheetinfo, isshow):
                     num = j-1
                     # print(num)
                     if j == 1:
-                        temp_1 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
+                        # temp_1 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
                         # print(temp_1)
+                        # temp_1 = sheetinfo.cell_value(i, j)
+                        pass
                     elif j == 2:
                         temp_2 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
                         # print(temp2)
@@ -138,17 +169,36 @@ def data_handle(sheetinfo, isshow):
                         temp_4 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
                         # print(temp4)
                     elif j == 5:
-                        temp_5 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
-                        # print(temp5)
+                        tx_str = sheetinfo.cell_value(i, j)
+                        tx_array1 = tx_str.split('|')
+                        tx = ''
+                        print(tx_array1)
+                        if len(tx_array1) > 1:
+                            for c in range(len(tx_array1)):
+                                for a in range(1, len(tx_sheet.col_values(0))):
+                                    for b in range(1, len(tx_sheet.row_values(0))):
+                                        if tx_array1[c][1:len(sheetinfo.cell_value(i, j))] == tx_sheet.cell_value(a, b):
+                                            tx = tx + tx_array1[c] + ":" + tx_sheet.cell_value(a, b + 1) + '|n'
+                                            print(tx)
+                                        else:
+                                            pass
+                            temp_5 = title_array[num] + ":|n" + tx
+                            pass
+                        for a in range(1, len(tx_sheet.col_values(0))):
+                            for b in range(1, len(tx_sheet.row_values(0))):
+                                if sheetinfo.cell_value(i, j)[1:len(sheetinfo.cell_value(i, j))] == tx_sheet.cell_value(a, b):
+                                    print(tx_sheet.cell_value(a, b))
+                                    temp_5 = title_array[num] + ":|n" + sheetinfo.cell_value(i, j) + ":" + tx_sheet.cell_value(a, b + 1) + '|n'
+                                    print(temp_5)
+                                else:
+                                    pass
                     elif j == 6:
-                        temp_6 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
-                        # print(temp6)
+                        temp_6 = title_array[num] + ":" + sheetinfo.cell_value(i, j)
                     else:
                         pass
-            temp = temp + temp_1 + temp_2 + temp_3 + temp_4 + temp_5 + temp_6 + '\n'
-            print(temp)
-            return temp
-        # print(i, j)
+            temp = temp + temp_1 + temp_2 + temp_3 + temp_4 + temp_5 + temp_6 + ','
+        print(temp)
+        return temp
 def data_write():
     pass
 
@@ -196,7 +246,8 @@ def T1():
     data = xlrd.open_workbook(path)
     _sheetDaoju = data.sheet_by_name(name)
 
-    function_lua(_sheetDaoju, isshow)
+    _sheetinfo = data.sheet_by_name('道具信息')
+    function_lua(_sheetDaoju, _sheetinfo, isshow)
 
 def T2():
     PathTip.place(x=5, y=5)
@@ -249,9 +300,10 @@ if __name__ == '__main__':
     luaCodeStart = "<?local slk = require 'slk' ?>\n"
     luaCodeFunction = "function Test1 takes nothing returns nothing\n"
     luaCodeFunction1 = "function Test2 takes nothing returns nothing\n"
-    luaCodeID = "\t<? local obj = slk.item.afac:new '{0}'?>\n\t<?\n"
-    luaCodeID2 = "\t<? local obj = slk.ability.{0}:new '{1}'?>\n\t<?\n"
-    luaCodeItem = "\t\tobj.{0} = {1}\n"
+    luaCodeID    = "\t<? local obj = slk.item.afac:new '{0}'?>\n\t<?\n"
+    luaCodeID2   = "\t<? local obj = slk.ability.{0}:new '{1}'?>\n\t<?\n"
+    luaCodeItem  = "\t\tobj.{0} = {1}\n"
+    luaCodeItem2 = "\t\tobj.{0} = {1}{2}{3}\n"
     luaCodeEnd = "endfunction"
 
     window = tk.Tk()
@@ -292,5 +344,12 @@ if __name__ == '__main__':
     Btn5.place(x=30,  y=400)
     Btn6.place(x=260, y=400)
     Btn7.place(x=340, y=400)
+
+
+
+    # 特性表
+    tx_path = FilePath.get(index1=1.0, index2=tk.END)[:-1]
+    tx_data = xlrd.open_workbook(tx_path)
+    tx_sheet = tx_data.sheet_by_name('特性表')
 
     window.mainloop()
