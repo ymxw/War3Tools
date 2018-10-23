@@ -277,7 +277,8 @@ if __name__ == '__main__':
 
     # path = sys.path[0]
     path = sys.argv[0]
-    path = path[:-12]
+    # 程序运行的话，用12，打包成exe的话，改成13
+    path = path[:-13]
     FilePath.insert(index=tk.INSERT, chars=path + "物编表.xlsx")
 
     Btn1 = tk.Button(window, text='道具', width=15, height=1, command=t1)
