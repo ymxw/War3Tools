@@ -6,39 +6,28 @@ import tkinter.messagebox
 
 # 生成物编
 def function_read(sheetDaoju):
-    print(sheetDaoju.nrows)
-    print(sheetDaoju.ncols)
     __ItemInfo = ""
     lists = [[] for i in range(sheetDaoju.ncols)]
     lists2 = []
 
     for i in range(2, sheetDaoju.nrows):
-        # print(sheetDaoju.cell_value(2, 0))
         for j in range(sheetDaoju.ncols):
-            # print(sheetDaoju.cell_value(0,j))
             lists[j].append(sheetDaoju.cell_value(i, j))
-            # pass
 
     for i in range(1, sheetDaoju.nrows-3):
-        # print(sheetDaoju.cell_value(2, 0))
         for j in range(sheetDaoju.ncols):
-            # print(sheetDaoju.cell_value(0,j))
             lists2.append(sheetDaoju.cell_value(i, j))
-            # pass
 
-    print(lists2)
 
     return lists2, lists
 def function_lua(sheetDaoju, sheetinfo, isshow):
 
     _sheetName = sheetName.get(index1=1.0, index2=tk.END)[:-1]
     __Lua_Title, __Lua_Item = function_read(sheetDaoju)
-    print(__Lua_Item[0])
     LuaCode = luaCodeStart + luaCodeFunction
     LuaCode1 = luaCodeStart + luaCodeFunction1
     iteminfo = data_handle(sheetinfo, isshow)
     iteminfo_array = iteminfo.split(',')
-    # print(iteminfo_array)
     if '道具' in _sheetName:
         tempItem = LuaCode
     else:
@@ -48,7 +37,6 @@ def function_lua(sheetDaoju, sheetinfo, isshow):
             if '道具' in _sheetName:
                 if j == 0:
                     tempItem = tempItem + luaCodeID.format(__Lua_Item[0][i])
-                    print(_sheetName[-4:])
                 else:
                     if __Lua_Item[j][i] == "":
                         pass
@@ -65,17 +53,14 @@ def function_lua(sheetDaoju, sheetinfo, isshow):
             else:
                 if j == 0:
                     tempItem = tempItem + luaCodeID2.format(_sheetName[-4:], __Lua_Item[0][i])
-                    print(_sheetName[-4:])
                 else:
                     if __Lua_Item[j][i] == "":
                         pass
                     else:
                         tempItem = tempItem + luaCodeItem.format(__Lua_Title[j], __Lua_Item[j][i])
         tempItem = tempItem + "\t?>\n"
-    # print(tempItem)
 
     tempItem = tempItem + luaCodeEnd
-    print(tempItem)
     f = open(path + "\{0}.txt".format(_sheetName), 'w')
     f.write(tempItem)
     f.close()
@@ -85,7 +70,6 @@ def data_handle(sheetinfo, isshow):
     title_array = []
     for i in range(1, len(sheetinfo.row_values(0))):
         title_array.append(sheetinfo.row_values(0)[i])
-    print(title_array)
 
     temp_1, temp_2, temp_3, temp_4, temp_5, temp_6 = "", "", "", "", "", ""
     temp_array = ["", "", "", "", "", ""]
@@ -93,38 +77,29 @@ def data_handle(sheetinfo, isshow):
 
     if isshow:
         for i in range(1, len(sheetinfo.col_values(0))):
-            # print('第{0}次'.format(i))
             for j in range(1, len(title_array)+1):
-                # print(sheetinfo.cell_value(i, j))
                 if sheetinfo.cell_value(i, j) == '':
                     pass
                 else:
                     num = j-1
-                    # print(num)
                     if j == 1:
                         temp_1 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
-                        # print(temp_1)
                     elif j == 2:
                         temp_2 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
-                        # print(temp2)
                     elif j == 3:
                         temp_3 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
-                        # print(temp3)
                     elif j == 4:
                         temp_4 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '\n'
-                        # print(temp4)
                     elif j == 5:
                         tx_str = sheetinfo.cell_value(i, j)
                         tx_array1 = tx_str.split('|')
                         tx = ''
-                        print(tx_array1)
                         if len(tx_array1)>1:
                             for c in range(len(tx_array1)):
                                 for a in range(1, len(tx_sheet.col_values(0))):
                                     for b in range(1, len(tx_sheet.row_values(0))):
                                         if tx_array1[c][1:len(sheetinfo.cell_value(i, j))] == tx_sheet.cell_value(a, b):
                                             tx = tx + tx_array1[c] + tx_sheet.cell_value(a, b + 1) + '\n'
-                                            print(tx)
                                         else:
                                             pass
                             temp_5 = title_array[num] + ":\n" + tx
@@ -132,9 +107,7 @@ def data_handle(sheetinfo, isshow):
                         for a in range(1, len(tx_sheet.col_values(0))):
                             for b in range(1, len(tx_sheet.row_values(0))):
                                 if sheetinfo.cell_value(i, j)[1:len(sheetinfo.cell_value(i, j))] == tx_sheet.cell_value(a, b):
-                                    print(tx_sheet.cell_value(a, b))
                                     temp_5 = title_array[num] + ":\n" + sheetinfo.cell_value(i, j) + ":" + tx_sheet.cell_value(a, b+1) + '\n'
-                                    print(temp_5)
                                 else:
                                     pass
                     elif j == 6:
@@ -142,44 +115,35 @@ def data_handle(sheetinfo, isshow):
                     else:
                         pass
             temp = temp + temp_1 + temp_2 + temp_3 + temp_4 + temp_5 + temp_6 + '\n'
-        print(temp)
-
+        f = open(path + "\{0}.txt".format('效果预览'), 'w')
+        f.write(temp)
+        f.close()
+        return
     else:
         for i in range(1, len(sheetinfo.col_values(0))):
-            # print('第{0}次'.format(i))
             for j in range(1, len(title_array)+1):
-                # print(sheetinfo.cell_value(i, j))
                 if sheetinfo.cell_value(i, j) == '':
                     pass
                 else:
                     num = j-1
-                    # print(num)
                     if j == 1:
-                        # temp_1 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
-                        # print(temp_1)
-                        # temp_1 = sheetinfo.cell_value(i, j)
                         pass
                     elif j == 2:
                         temp_2 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
-                        # print(temp2)
                     elif j == 3:
                         temp_3 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
-                        # print(temp3)
                     elif j == 4:
                         temp_4 = title_array[num] + ":" + sheetinfo.cell_value(i, j) + '|n'
-                        # print(temp4)
                     elif j == 5:
                         tx_str = sheetinfo.cell_value(i, j)
                         tx_array1 = tx_str.split('|')
                         tx = ''
-                        print(tx_array1)
                         if len(tx_array1) > 1:
                             for c in range(len(tx_array1)):
                                 for a in range(1, len(tx_sheet.col_values(0))):
                                     for b in range(1, len(tx_sheet.row_values(0))):
                                         if tx_array1[c][1:len(sheetinfo.cell_value(i, j))] == tx_sheet.cell_value(a, b):
                                             tx = tx + tx_array1[c] + ":" + tx_sheet.cell_value(a, b + 1) + '|n'
-                                            print(tx)
                                         else:
                                             pass
                             temp_5 = title_array[num] + ":|n" + tx
@@ -187,9 +151,7 @@ def data_handle(sheetinfo, isshow):
                         for a in range(1, len(tx_sheet.col_values(0))):
                             for b in range(1, len(tx_sheet.row_values(0))):
                                 if sheetinfo.cell_value(i, j)[1:len(sheetinfo.cell_value(i, j))] == tx_sheet.cell_value(a, b):
-                                    print(tx_sheet.cell_value(a, b))
                                     temp_5 = title_array[num] + ":|n" + sheetinfo.cell_value(i, j) + ":" + tx_sheet.cell_value(a, b + 1) + '|n'
-                                    print(temp_5)
                                 else:
                                     pass
                     elif j == 6:
@@ -197,7 +159,6 @@ def data_handle(sheetinfo, isshow):
                     else:
                         pass
             temp = temp + temp_1 + temp_2 + temp_3 + temp_4 + temp_5 + temp_6 + ','
-        print(temp)
         return temp
 def data_write():
     pass
@@ -266,8 +227,6 @@ def T3():
     path = FilePath.get(index1=1.0, index2=tk.END)[:-1]
     data = xlrd.open_workbook(path)
     _sheetName = sheetName.get(index1=1.0, index2=tk.END)[:-1]
-    print(_sheetName)
-    print(_sheetName[:-5])
     _sheetDaoju = data.sheet_by_name(_sheetName)
     function_lua(_sheetDaoju)
 
@@ -319,7 +278,6 @@ if __name__ == '__main__':
     # path = sys.path[0]
     path = sys.argv[0]
     path = path[:-12]
-    # print(path + "物编表.xls")
     FilePath.insert(index=tk.INSERT, chars=path + "物编表.xlsx")
 
     Btn1 = tk.Button(window, text='道具', width=15, height=1, command=t1)
