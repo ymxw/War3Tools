@@ -20,7 +20,11 @@ def function_read(sheetDaoju):
 
 
     return lists2, lists
-def function_lua(sheetDaoju, sheetinfo, isshow):
+def function_lua(sheetDaoju, sheetinfo, sheetDefine, isshow):
+    temp_array = ["装备_01主手", "装备_02副手", "装备_03肩部", "装备_04上身", "装备_05腰部", "装备_06腿部", "装备_07脚部", "装备_08颈部", "装备_09手腕", "装备_10手指", "装备_11称号"]
+
+    temp_number1,temp_number2,temp_number3,temp_number4,temp_number5,temp_number6,temp_number7,temp_number8,temp_number9,temp_number10,temp_number11 = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    temp_number_array = [temp_number1, temp_number2, temp_number3, temp_number4, temp_number5, temp_number6, temp_number7, temp_number8, temp_number9, temp_number10, temp_number11]
 
     _sheetName = sheetName.get(index1=1.0, index2=tk.END)[:-1]
     __Lua_Title, __Lua_Item = function_read(sheetDaoju)
@@ -28,9 +32,9 @@ def function_lua(sheetDaoju, sheetinfo, isshow):
     LuaCode1 = luaCodeStart + luaCodeFunction1
     iteminfo = data_handle(sheetinfo, isshow)
     iteminfo_array = iteminfo.split(',')
-    if '道具' in _sheetName:
+    if '道具' in _sheetName:#如果表格名含有道具那么生成的jass函数名为 test1
         tempItem = LuaCode
-    else:
+    else:#如果表格名不含有道具那么生成的jass函数名为 test2
         tempItem = LuaCode1
     for i in range(len(__Lua_Item[0])):
         for j in range(len(__Lua_Item)):
@@ -50,6 +54,7 @@ def function_lua(sheetDaoju, sheetinfo, isshow):
                         else:
                             tempItem = tempItem + luaCodeItem.format(__Lua_Title[j], __Lua_Item[j][i])
 
+
             else:
                 if j == 0:
                     tempItem = tempItem + luaCodeID2.format(_sheetName[-4:], __Lua_Item[0][i])
@@ -58,9 +63,16 @@ def function_lua(sheetDaoju, sheetinfo, isshow):
                         pass
                     else:
                         tempItem = tempItem + luaCodeItem.format(__Lua_Title[j], __Lua_Item[j][i])
-        tempItem = tempItem + "\t?>\n"
 
+        for number in range(len(temp_array)):#处理道具注册
+            if(sheetDefine.cell_value(i+2, 2) == temp_array[number][-2:]):
+                temp_number_array[number] = temp_number_array[number] + 1
+                jass_define = jassCodeDefine.format(temp_array[number], temp_number_array[number], sheetDefine.cell_value(i+2, 0))
+            else:
+                pass
+        tempItem = tempItem + "\t?>\n" + jass_define#每生成一个道具，在下面加上一个定义
     tempItem = tempItem + luaCodeEnd
+    print(tempItem)
     f = open(path + "\{0}.txt".format(_sheetName), 'w')
     f.write(tempItem)
     f.close()
@@ -208,7 +220,8 @@ def T1():
     _sheetDaoju = data.sheet_by_name(name)
 
     _sheetinfo = data.sheet_by_name('道具信息')
-    function_lua(_sheetDaoju, _sheetinfo, isshow)
+    _sheetDefine = data.sheet_by_name('道具注册')
+    function_lua(_sheetDaoju, _sheetinfo, _sheetDefine, isshow)
 
 def T2():
     PathTip.place(x=5, y=5)
@@ -264,6 +277,7 @@ if __name__ == '__main__':
     luaCodeItem  = "\t\tobj.{0} = {1}\n"
     luaCodeItem2 = "\t\tobj.{0} = {1}{2}{3}\n"
     luaCodeEnd = "endfunction"
+    jassCodeDefine = "\tset udg_{0}[{1}] = '{2}'\n"# 0 变量名 1 数字 2道具ID
 
     window = tk.Tk()
     window.title('物编生成器 龙吟水上 1243391642')
@@ -278,7 +292,8 @@ if __name__ == '__main__':
     # path = sys.path[0]
     path = sys.argv[0]
     # 程序运行的话，用12，打包成exe的话，改成13
-    path = path[:-13]
+    path = path[:-12]
+    # path = path[:-13]
     FilePath.insert(index=tk.INSERT, chars=path + "物编表.xlsx")
 
     Btn1 = tk.Button(window, text='道具', width=15, height=1, command=t1)

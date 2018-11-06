@@ -1,0 +1,111 @@
+<?local slk = require 'slk' ?>
+function Test1 takes nothing returns nothing
+	<? local obj = slk.item.afac:new 'I001'?>
+	<?
+		obj.Name = "炎魔之手"
+		obj.Description = "道具类型:主手|n道具品质:传说|n道具属性:①攻击力：+500万|n道具特性:|n①灼热地狱:每秒对周围造成【100*人物等级】点伤害|n②致命之握:每次攻击有【6%】的概率扣除【1%】的当前生命值|n道具描述:炎魔之王的武器"
+		obj.Tip = "道具类型:主手|n道具品质:传说|n道具属性:①攻击力：+500万|n道具特性:|n①灼热地狱:每秒对周围造成【100*人物等级】点伤害|n②致命之握:每次攻击有【6%】的概率扣除【1%】的当前生命值|n道具描述:炎魔之王的武器"
+		obj.Ubertip = "道具类型:主手|n道具品质:传说|n道具属性:①攻击力：+500万|n道具特性:|n①灼热地狱:每秒对周围造成【100*人物等级】点伤害|n②致命之握:每次攻击有【6%】的概率扣除【1%】的当前生命值|n道具描述:炎魔之王的武器"
+		obj.colorR = 255.0
+		obj.colorB = 255.0
+		obj.colorG = 255.0
+		obj.goldcost = 400.0
+		obj.luabercost = 0.0
+		obj.stockStart = 0.0
+		obj.stockRegen = 120.0
+		obj.stockMax = 1.0
+		obj.cooldownID = "AEar"
+		obj.ignoreCD = 0.0
+		obj.drop = 0.0
+		obj.powerup = 0.0
+		obj.sellable = 1.0
+		obj.pawnable = 1.0
+		obj.droppable = 1.0
+		obj.pickRandom = 1.0
+		obj.uses = 0.0
+		obj.perishable = 0.0
+		obj.usable = 0.0
+	?>
+	set udg_装备_01主手[1] = 'I001'
+	<? local obj = slk.item.afac:new 'I002'?>
+	<?
+		obj.Name = "霜之哀伤"
+		obj.Description = "道具类型:主手|n道具品质:传说|n道具属性:①攻击力：+500万|n道具特性:|n①寒冰之息:每次攻击有【5%】的概率冰封敌人|n道具描述:巫妖王的武器"
+		obj.Tip = "道具类型:主手|n道具品质:传说|n道具属性:①攻击力：+500万|n道具特性:|n①寒冰之息:每次攻击有【5%】的概率冰封敌人|n道具描述:巫妖王的武器"
+		obj.Ubertip = "道具类型:主手|n道具品质:传说|n道具属性:①攻击力：+500万|n道具特性:|n①寒冰之息:每次攻击有【5%】的概率冰封敌人|n道具描述:巫妖王的武器"
+		obj.colorR = 255.0
+		obj.colorB = 255.0
+		obj.colorG = 255.0
+		obj.goldcost = 400.0
+		obj.luabercost = 0.0
+		obj.stockStart = 0.0
+		obj.stockRegen = 120.0
+		obj.stockMax = 1.0
+		obj.cooldownID = "AEar"
+		obj.ignoreCD = 0.0
+		obj.drop = 0.0
+		obj.powerup = 0.0
+		obj.sellable = 1.0
+		obj.pawnable = 1.0
+		obj.droppable = 1.0
+		obj.pickRandom = 1.0
+		obj.uses = 0.0
+		obj.perishable = 0.0
+		obj.usable = 0.0
+	?>
+	set udg_装备_01主手[2] = 'I002'
+	<? local obj = slk.item.afac:new 'I003'?>
+	<?
+		obj.Name = "埃辛诺斯之刃*主"
+		obj.Description = "道具类型:主手|n道具品质:传说|n道具属性:①攻击力：+300万|n道具特性:|n①恶魔之力:每次攻击有【5%】的概率扣除【5%】的当前生命值|n道具描述:恶魔猎手的武器"
+		obj.Tip = "道具类型:主手|n道具品质:传说|n道具属性:①攻击力：+300万|n道具特性:|n①恶魔之力:每次攻击有【5%】的概率扣除【5%】的当前生命值|n道具描述:恶魔猎手的武器"
+		obj.Ubertip = "道具类型:主手|n道具品质:传说|n道具属性:①攻击力：+300万|n道具特性:|n①恶魔之力:每次攻击有【5%】的概率扣除【5%】的当前生命值|n道具描述:恶魔猎手的武器"
+		obj.colorR = 255.0
+		obj.colorB = 255.0
+		obj.colorG = 255.0
+		obj.goldcost = 400.0
+		obj.luabercost = 0.0
+		obj.stockStart = 0.0
+		obj.stockRegen = 120.0
+		obj.stockMax = 1.0
+		obj.cooldownID = "AEar"
+		obj.ignoreCD = 0.0
+		obj.drop = 0.0
+		obj.powerup = 0.0
+		obj.sellable = 1.0
+		obj.pawnable = 1.0
+		obj.droppable = 1.0
+		obj.pickRandom = 1.0
+		obj.uses = 0.0
+		obj.perishable = 0.0
+		obj.usable = 0.0
+	?>
+	set udg_装备_01主手[3] = 'I003'
+	<? local obj = slk.item.afac:new 'I004'?>
+	<?
+		obj.Name = "埃辛诺斯之刃*副"
+		obj.Description = "道具类型:副手|n道具品质:传说|n道具属性:①攻击力：+200万|n道具特性:|n①恶魔之力:每次攻击有【5%】的概率扣除【5%】的当前生命值|n道具描述:恶魔猎手的武器"
+		obj.Tip = "道具类型:副手|n道具品质:传说|n道具属性:①攻击力：+200万|n道具特性:|n①恶魔之力:每次攻击有【5%】的概率扣除【5%】的当前生命值|n道具描述:恶魔猎手的武器"
+		obj.Ubertip = "道具类型:副手|n道具品质:传说|n道具属性:①攻击力：+200万|n道具特性:|n①恶魔之力:每次攻击有【5%】的概率扣除【5%】的当前生命值|n道具描述:恶魔猎手的武器"
+		obj.colorR = 255.0
+		obj.colorB = 255.0
+		obj.colorG = 255.0
+		obj.goldcost = 400.0
+		obj.luabercost = 0.0
+		obj.stockStart = 0.0
+		obj.stockRegen = 120.0
+		obj.stockMax = 1.0
+		obj.cooldownID = "AEar"
+		obj.ignoreCD = 0.0
+		obj.drop = 0.0
+		obj.powerup = 0.0
+		obj.sellable = 1.0
+		obj.pawnable = 1.0
+		obj.droppable = 1.0
+		obj.pickRandom = 1.0
+		obj.uses = 0.0
+		obj.perishable = 0.0
+		obj.usable = 0.0
+	?>
+	set udg_装备_02副手[1] = 'I004'
+endfunction
