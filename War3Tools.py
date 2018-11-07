@@ -25,7 +25,7 @@ def function_lua(sheetDaoju, sheetinfo, sheetDefine, isshow):
 
     temp_number1,temp_number2,temp_number3,temp_number4,temp_number5,temp_number6,temp_number7,temp_number8,temp_number9,temp_number10,temp_number11 = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     temp_number_array = [temp_number1, temp_number2, temp_number3, temp_number4, temp_number5, temp_number6, temp_number7, temp_number8, temp_number9, temp_number10, temp_number11]
-
+    jass_define = ""
     _sheetName = sheetName.get(index1=1.0, index2=tk.END)[:-1]
     __Lua_Title, __Lua_Item = function_read(sheetDaoju)
     LuaCode = luaCodeStart + luaCodeFunction
@@ -67,15 +67,21 @@ def function_lua(sheetDaoju, sheetinfo, sheetDefine, isshow):
         for number in range(len(temp_array)):#处理道具注册
             if(sheetDefine.cell_value(i+2, 2) == temp_array[number][-2:]):
                 temp_number_array[number] = temp_number_array[number] + 1
-                jass_define = jassCodeDefine.format(temp_array[number], temp_number_array[number], sheetDefine.cell_value(i+2, 0))
+                jass_define1 = jassCodeDefine.format(temp_array[number], temp_number_array[number], sheetDefine.cell_value(i+2, 0))
             else:
                 pass
-        tempItem = tempItem + "\t?>\n" + jass_define#每生成一个道具，在下面加上一个定义
+        tempItem = tempItem + "\t?>\n"
+        jass_define = jass_define + jass_define1
     tempItem = tempItem + luaCodeEnd
     print(tempItem)
     f = open(path + "\{0}.txt".format(_sheetName), 'w')
     f.write(tempItem)
     f.close()
+
+    print(jass_define)
+    f2 = open(path + "\{0}.txt".format('注册道具'), 'w')
+    f2.write(jass_define)
+    f2.close()
 
 # 生成预览
 def data_handle(sheetinfo, isshow):
